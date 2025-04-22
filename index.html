@@ -5,19 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#000000" />
   <title>Sambath WinTech</title>
-  <link rel="manifest" href="manifest.json" />
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(function (registration) {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          }, function (err) {
-            console.log('ServiceWorker registration failed: ', err);
-          });
-      });
+
+  <!-- Manifest Inline -->
+  <script type="application/manifest+json">
+    {
+      "name": "Sambath WinTech",
+      "short_name": "WinTech",
+      "start_url": ".",
+      "display": "standalone",
+      "background_color": "#000000",
+      "theme_color": "#000000",
+      "icons": [
+        {
+          "src": "icon.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        }
+      ]
     }
   </script>
+
   <style>
     body {
       margin: 0;
@@ -48,6 +55,20 @@
       background-color: #45a049;
     }
   </style>
+
+  <!-- Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(function (registration) {
+            console.log('ServiceWorker registration successful: ', registration.scope);
+          }, function (err) {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
+  </script>
 </head>
 <body>
   <h1>Sambath WinTech</h1>
@@ -60,11 +81,4 @@
 
   <script>
     function getPrediction() {
-      const options = ['Player', 'Banker', 'No Bet'];
-      const choice = options[Math.floor(Math.random() * options.length)];
-      document.getElementById('suggestion').innerText = choice;
-    }
-    window.onload = getPrediction;
-  </script>
-</body>
-  </html>
+      const options = ['Player', '
