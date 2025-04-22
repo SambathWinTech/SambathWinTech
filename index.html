@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+  <title>Sambath WinTech</title>
+  <link rel="manifest" href="manifest.json" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(function (registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function (err) {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
+  </script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .card {
+      background-color: #222;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      margin-top: 30px;
+    }
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sambath WinTech</h1>
+  <div class="card">
+    <h2>AI Trend Tracker</h2>
+    <p>Current Suggestion:</p>
+    <h3 id="suggestion">Loading...</h3>
+    <button onclick="getPrediction()">Refresh Prediction</button>
+  </div>
+
+  <script>
+    function getPrediction() {
+      const options = ['Player', 'Banker', 'No Bet'];
+      const choice = options[Math.floor(Math.random() * options.length)];
+      document.getElementById('suggestion').innerText = choice;
+    }
+    window.onload = getPrediction;
+  </script>
+</body>
+  </html>
