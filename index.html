@@ -3,89 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sambath WinTech</title>
+  <title>Sambath WinTech - Baccarat Prediction</title>
   <style>
     body {
-      background: #111;
+      background: transparent;
       color: #fff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 20px;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
     }
-    h1 { margin-bottom: 10px; }
-    .card {
-      background: #222;
+    #prediction {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px 30px;
       border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      margin-top: 20px;
+      font-size: 30px;
+      font-weight: bold;
+      color: #FFD700;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
     }
     button {
-      padding: 10px 20px;
-      margin: 10px 5px;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      background: #4CAF50;
+      margin-top: 20px;
+      padding: 10px 25px;
+      background: #28a745;
       color: white;
+      border: none;
+      border-radius: 15px;
+      font-size: 18px;
       cursor: pointer;
     }
     button:hover {
-      background: #3e8e41;
-    }
-    .result {
-      margin-top: 10px;
-      font-size: 18px;
-      color: #ffd700;
+      background: #218838;
     }
   </style>
 </head>
 <body>
-  <h1>Sambath WinTech</h1>
-  <div class="card">
-    <h2>AI Trend Tracker</h2>
-    <p>Current Suggestion:</p>
-    <h3 id="suggestion">Loading...</h3>
-    <button onclick="getPrediction()">Refresh Prediction</button>
-  </div>
-
-  <div class="card">
-    <h2>Result Tracker</h2>
-    <p>Total Rounds: <span id="total">0</span></p>
-    <p>Last Winner: <span id="last">None</span></p>
-    <p>Current Streak: <span id="streak">0</span> (<span id="streakSide">-</span>)</p>
-    <button onclick="recordWin('Player')">Player Win</button>
-    <button onclick="recordWin('Banker')">Banker Win</button>
-  </div>
+  <div id="prediction">Loading...</div>
+  <button onclick="refreshPrediction()">Get Prediction</button>
 
   <script>
-    let totalRounds = 0;
-    let currentStreak = 0;
-    let lastWinner = '';
-    
-    function getPrediction() {
-      const options = ['Player', 'Banker', 'No Bet'];
+    const options = ['Player', 'Banker', 'No Bet'];
+
+    function refreshPrediction() {
       const choice = options[Math.floor(Math.random() * options.length)];
-      document.getElementById('suggestion').innerText = choice;
+      document.getElementById('prediction').innerText = choice;
     }
 
-    function recordWin(winner) {
-      totalRounds++;
-      document.getElementById('total').innerText = totalRounds;
-      document.getElementById('last').innerText = winner;
-
-      if (winner === lastWinner) {
-        currentStreak++;
-      } else {
-        currentStreak = 1;
-        lastWinner = winner;
-      }
-
-      document.getElementById('streak').innerText = currentStreak;
-      document.getElementById('streakSide').innerText = lastWinner;
-    }
-
-    window.onload = getPrediction;
+    // Automatically get the first prediction
+    window.onload = refreshPrediction;
   </script>
 </body>
 </html>
