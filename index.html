@@ -3,72 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#000000" />
   <title>Sambath WinTech</title>
-
-  <!-- Manifest Inline -->
-  <script type="application/manifest+json">
-    {
-      "name": "Sambath WinTech",
-      "short_name": "WinTech",
-      "start_url": ".",
-      "display": "standalone",
-      "background_color": "#000000",
-      "theme_color": "#000000",
-      "icons": [
-        {
-          "src": "icon.png",
-          "type": "image/png",
-          "sizes": "192x192"
-        }
-      ]
-    }
-  </script>
-
   <style>
     body {
-      margin: 0;
+      background: #111;
+      color: #fff;
       font-family: Arial, sans-serif;
-      background-color: #111;
-      color: white;
       text-align: center;
       padding: 20px;
     }
+    h1 { margin-bottom: 10px; }
     .card {
-      background-color: #222;
+      background: #222;
       border-radius: 20px;
       padding: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      margin-top: 30px;
-    }
-    button {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
       margin-top: 20px;
     }
+    button {
+      padding: 10px 20px;
+      margin: 10px 5px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
     button:hover {
-      background-color: #45a049;
+      background: #3e8e41;
+    }
+    .result {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #ffd700;
     }
   </style>
-
-  <!-- Service Worker -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(function (registration) {
-            console.log('ServiceWorker registration successful: ', registration.scope);
-          }, function (err) {
-            console.log('ServiceWorker registration failed: ', err);
-          });
-      });
-    }
-  </script>
 </head>
 <body>
   <h1>Sambath WinTech</h1>
@@ -79,6 +49,43 @@
     <button onclick="getPrediction()">Refresh Prediction</button>
   </div>
 
+  <div class="card">
+    <h2>Result Tracker</h2>
+    <p>Total Rounds: <span id="total">0</span></p>
+    <p>Last Winner: <span id="last">None</span></p>
+    <p>Current Streak: <span id="streak">0</span> (<span id="streakSide">-</span>)</p>
+    <button onclick="recordWin('Player')">Player Win</button>
+    <button onclick="recordWin('Banker')">Banker Win</button>
+  </div>
+
   <script>
+    let totalRounds = 0;
+    let currentStreak = 0;
+    let lastWinner = '';
+    
     function getPrediction() {
-      const options = ['Player', '
+      const options = ['Player', 'Banker', 'No Bet'];
+      const choice = options[Math.floor(Math.random() * options.length)];
+      document.getElementById('suggestion').innerText = choice;
+    }
+
+    function recordWin(winner) {
+      totalRounds++;
+      document.getElementById('total').innerText = totalRounds;
+      document.getElementById('last').innerText = winner;
+
+      if (winner === lastWinner) {
+        currentStreak++;
+      } else {
+        currentStreak = 1;
+        lastWinner = winner;
+      }
+
+      document.getElementById('streak').innerText = currentStreak;
+      document.getElementById('streakSide').innerText = lastWinner;
+    }
+
+    window.onload = getPrediction;
+  </script>
+</body>
+</html>
